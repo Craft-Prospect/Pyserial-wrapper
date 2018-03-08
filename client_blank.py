@@ -4,7 +4,6 @@
 
 import time
 from serial_wrapper import Serial
-from numpy import sin, cos
 
 # Start client timer
 TIME_INIT = time.time()
