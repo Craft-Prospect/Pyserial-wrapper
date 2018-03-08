@@ -60,6 +60,11 @@ class Serial(object):
 
         return self.ser.is_open
 
+    def flush(self):
+        """Flush serial port"""
+
+        self.ser.flush()
+
     def close(self):
         """Close serial port"""
 
