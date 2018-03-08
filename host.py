@@ -18,33 +18,9 @@ if ser.is_open():
     print("Serial port is open")
 
 # Run client script
-ser.write_terminal_cmd("python3.6 ~/python/zynq-tests/client.py")
+ser.write_terminal_cmd("python3.6 ~/python/Pyserial-wrapper/client.py")
 
 # time.sleep(0.1)
-
-# Send handshake and check for receipt
-def send_handshake():
-    ZERO_TIME = None
-    handshake = False
-
-    t0 = time.time()
-    while handshake == False and time.time() - t0 < 5:
-        # Send handshake
-        ser.send_handshake()
-
-        # Listen for stuff
-        rcvd = ser.readline(timeout=0.01)
-        if rcvd != None and "received" in rcvd:
-            ZERO_TIME = time.time()
-            handshake = True
-
-    if handshake:
-        print("Handshake received")
-        print("Client and host connected")
-    else:
-        print("Handshake not received, timed out")
-
-    return handshake, ZERO_TIME
 
 def read_data(ZERO_TIME):
     # Read data transmission
@@ -78,7 +54,6 @@ print("Closing port")
 ser.close()
 
 # Display data
-
 if handshake:
     import matplotlib.pyplot as plt
 
