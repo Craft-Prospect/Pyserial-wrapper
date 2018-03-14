@@ -68,4 +68,41 @@ class Serial(object):
     def send_handshake(self):
         """Send handshake phrase to client"""
 
-        self.writeline(self.HANDSHAKE)
+        ZERO_TIME = None
+        handshake = False
+
+        t0 = time.time()
+        while handshake == False and time.time() - t0 < 5:
+            # Send handshake
+            self.writeline(self.HANDSHAKE)
+
+            # Listen for stuff
+            rcvd = self.readline(timeout=0.01)
+            if rcvd != None and "received" in rcvd:
+                ZERO_TIME = time.time()
+                handshake = True
+
+        if handshake:
+            print("Handshake received")
+            print("Client and host connected")
+        else:
+            print("Handshake not received, timed out")
+
+        return handshake, ZERO_TIME
+
+    def listen_for_handshake(self):
+        """Listen for handshake from host"""
+
+        ZERO_TIME = None
+        handshake = False
+
+        t0 = time.time()
+        while handshake == False and time.time() - t0 < 5:
+            rcvd = self.readline(timeout=0.01)
+            if rcvd == self.HANDSHAKE:
+                for i in range(0, 1):
+                    self.writeline("received")
+                ZERO_TIME = time.time()
+                handshake = True
+
+        return ZERO_TIME

@@ -47,7 +47,7 @@ def write_data(ZERO_TIME):
         ser.writeline(send)
         time.sleep(0.01)
 
-zero_time = listen_for_handshake()
+zero_time = ser.listen_for_handshake()
 
 DELAY = 0.5
 time.sleep(DELAY)

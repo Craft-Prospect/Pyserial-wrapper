@@ -63,7 +63,7 @@ def read_data(ZERO_TIME):
 
     return data
 
-handshake, zero_time = send_handshake()
+handshake, zero_time = ser.send_handshake()
 
 DELAY = 0.5
 time.sleep(DELAY)
