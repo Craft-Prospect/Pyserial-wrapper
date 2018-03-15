@@ -65,14 +65,14 @@ class Serial(object):
 
         self.ser.close()
 
-    def send_handshake(self):
+    def send_handshake(self, wait_time=5):
         """Send handshake phrase to client"""
 
         ZERO_TIME = None
         handshake = False
 
         t0 = time.time()
-        while handshake == False and time.time() - t0 < 5:
+        while handshake == False and time.time() - t0 < wait_time:
             # Send handshake
             self.writeline(self.HANDSHAKE)
 
@@ -90,14 +90,14 @@ class Serial(object):
 
         return handshake, ZERO_TIME
 
-    def listen_for_handshake(self):
+    def listen_for_handshake(self, wait_time=5):
         """Listen for handshake from host"""
 
         ZERO_TIME = None
         handshake = False
 
         t0 = time.time()
-        while handshake == False and time.time() - t0 < 5:
+        while handshake == False and time.time() - t0 < wait_time:
             rcvd = self.readline(timeout=0.01)
             if rcvd == self.HANDSHAKE:
                 for i in range(0, 1):
