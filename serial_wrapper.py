@@ -74,7 +74,7 @@ class Serial(object):
         t0 = time.time()
         while handshake == False and time.time() - t0 < wait_time:
             # Send handshake
-            self.writeline("***" + self.HANDSHAKE "***")
+            self.writeline("***" + self.HANDSHAKE + "***")
 
             # Listen for stuff
             rcvd = self.readline(timeout=0.01)
