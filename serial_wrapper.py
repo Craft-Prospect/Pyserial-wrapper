@@ -99,7 +99,7 @@ class Serial(object):
         t0 = time.time()
         while handshake == False and time.time() - t0 < wait_time:
             rcvd = self.readline(timeout=0.01)
-            if rcvd == self.HANDSHAKE:
+            if self.HANDSHAKE in rcvd or self.HANDSHAKE == rcvd:
                 for i in range(0, 1):
                     self.writeline("***received***")
                 ZERO_TIME = time.time()
