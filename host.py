@@ -29,7 +29,7 @@ def read_data(ZERO_TIME):
     while loop == True and time.time() - ZERO_TIME <= 10:
         rcvd = ser.readline(timeout=0.02)
         if rcvd != None:
-            print(rcvd)
+            # print(rcvd)
             if "end_connection" in rcvd:
                 loop = False
             else:
