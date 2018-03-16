@@ -14,7 +14,7 @@ class Serial(object):
 
     HANDSHAKE = "Pynq panther"
 
-    def __init__(self, port, baudrate=115200, timeout=0.001):
+    def __init__(self, port, baudrate=115200, timeout=0):
         """Instantiate object"""
 
         self.ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
@@ -24,12 +24,12 @@ class Serial(object):
 
         self.ser.write(send.encode("ascii"))
 
-    def read(self, num_bytes=1):
+    def read(self):
         """Custom read function"""
 
-        rcvd = self.ser.read(num_bytes)
+        rcvd = self.ser.read(self.ser.in_waiting)
         
-        return rcvd.decode("ascii")
+        return str(rcvd.decode("ascii"))
 
     def writeline(self, send):
         """Custom write line function"""
@@ -68,13 +68,15 @@ class Serial(object):
     def send_handshake(self, wait_time=5):
         """Send handshake phrase to client"""
 
+        print("Sending handshake")
+
         ZERO_TIME = None
         handshake = False
 
         t0 = time.time()
         while handshake == False and time.time() - t0 < wait_time:
             # Send handshake
-            self.writeline("***" + self.HANDSHAKE + "***")
+            self.writeline(self.HANDSHAKE)
 
             # Listen for stuff
             rcvd = self.readline(timeout=0.01)
