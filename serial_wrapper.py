@@ -8,7 +8,7 @@ __date__ = "23/02/2018"
 __copyright__ = "Copyright 2018 Craft Prospect Ltd"
 
 import serial, time
-from tqdm import tqdm
+# from tqdm import tqdm
 import numpy as np
 
 class Serial(object):
@@ -150,23 +150,21 @@ class Serial(object):
             if rcvd != None and "ready" in rcvd:
                 loop = False
 
-        if verbal:
+        if verbal and time.time() - t0 < wait_time:
             print("Data ready to receive")
 
-    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), progress_bar=False):
+    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbal=False):
         """Read data in form of byte array"""
 
         if max_bytes == float("inf") and max_time == float("inf") and max_blanks == float("inf"):
             max_time = 10
 
-        if progress_bar:
-            progress = 0
-
         rcvd_acc = bytearray()
         total_bytes = 0
         running_blanks = 0
         t0 = time.time()
-        while total_bytes < max_bytes and time.time() - t0 < max_time and running_blanks < max_blanks:
+        t = 0
+        while total_bytes < max_bytes and t < max_time and running_blanks < max_blanks:
             num_bytes = self.in_waiting()
             rcvd = self.ser.read(num_bytes)
             rcvd_acc.extend(rcvd)
@@ -175,6 +173,13 @@ class Serial(object):
                 running_blanks += 1
             else:
                 running_blanks = 0
+            if running_blanks > 100:
+                t0 = time.time()
+            if verbal and num_bytes > 0:
+                print("Time: {:.2f}s, bytes: {}".format(t, num_bytes))
+                # print(rcvd[:20])
+            time.sleep(0.01)
+            t = time.time() - t0
 
         rcvd_acc = list(rcvd_acc)
 
