@@ -17,12 +17,7 @@ ser.flush()
 zero_time = ser.listen_for_handshake()
 
 # Wait for data signal
-# loop = True
-# while loop:
-#     time.sleep(0.5)
-#     rcvd = ser.readline(timeout=0.02)
-#     if rcvd != None and "ready" in rcvd:
-#         loop = False
+ser.get_ready()
 
 # # Receive data
 # total_bytes = 0
@@ -44,7 +39,9 @@ mask = cv2.inRange(grey, 90, 255)
 data = cv2.bitwise_and(img, img, mask=mask)
 
 # Send ready command
-# ser.writeline("ready")
+ser.send_ready()
+
+time.sleep(0.5)
 
 # Convert image to 1D list and send
 data = list(np.reshape(data, -1))
