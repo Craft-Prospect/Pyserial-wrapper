@@ -33,38 +33,18 @@ image_path = "test-small.jpg"
 img = cv2.imread(image_path)
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 img_dims = img.shape
+img_bytes = np.array(img_dims).prod()
 
-# fig = plt.figure()
-# axs = fig.subplots(1, 1)
-# axs.imshow(img)
-# plt.show()
-
-# # Send to client
-# ser.writeline("ready")
+# Send ready command
+ser.send_ready()
 
 # Wait for data signal
-# loop = True
-# while loop:
-#     print("Waiting for data transmission")
-#     time.sleep(0.5)
-#     rcvd = ser.readline(timeout=0.02)
-#     if rcvd != None and "ready" in rcvd:
-#         loop = False
-#         print("Data ready to read")
+ser.get_ready(verbal=True)
 
-# Receive altered image from client
-progress = tqdm(total=img_dims[0]*img_dims[1]*img_dims[2])
-total_bytes = 0
-rcvd_acc = bytearray()
-while total_bytes < img_dims[0]*img_dims[1]*img_dims[2]:
-    num_bytes = ser.ser.in_waiting
-    # print("Num bytes: {}".format(num_bytes))
-    total_bytes += num_bytes
-    rcvd = ser.ser.read(num_bytes)
-    rcvd_acc.extend(rcvd)
-    progress.update(num_bytes)
+# Receive data
+rcvd_acc = ser.read_data(max_bytes=img_bytes)
 
-data = np.array(list(rcvd_acc))
+data = np.array(rcvd_acc)
 print("Number of bytes in data package: {}".format(len(data)))
 
 data = np.reshape(data, img_dims)
