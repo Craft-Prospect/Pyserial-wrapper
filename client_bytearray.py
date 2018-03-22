@@ -36,16 +36,15 @@ zero_time = ser.listen_for_handshake()
 # img = np.reshape(data, (200, 50, 3))
 
 # Load image
-image_path = "/home/xilinx/python/cam_imagery/time14.00s.jpg"
+image_path = "/home/xilinx/python/Pyserial-wrapper/test-small.jpg"
 src = cv2.imread(image_path)
-print(src)
 img = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
-grey = cv2.cvtColor(src, cv2.COLOR_RGB2GRAY)
+grey = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
 mask = cv2.inRange(grey, 90, 255)
 data = cv2.bitwise_and(img, img, mask=mask)
 
 # Send ready command
-ser.writeline("ready")
+# ser.writeline("ready")
 
 # Convert image to 1D list and send
 data = list(np.reshape(data, -1))
@@ -53,7 +52,7 @@ send = bytearray(data)
 ser.ser.write(send)
 
 # Wait before ending so command line data doesn't get sent
-time.sleep(5)
+time.sleep(2)
 
 # Close serial port  
 ser.close()
