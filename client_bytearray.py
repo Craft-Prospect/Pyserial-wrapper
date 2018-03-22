@@ -6,12 +6,12 @@ import time, cv2
 import numpy as np
 from serial_wrapper import Serial
 
-# Settings
-BUFFER_SIZE = 4096
-
 # Create serial port object
 ser = Serial("/dev/ttyPS0")
 ser.flush()
+
+# Check script is running
+ser.writeline("Script running")
 
 # Listen for handshake
 zero_time = ser.listen_for_handshake()
@@ -19,27 +19,23 @@ zero_time = ser.listen_for_handshake()
 # Wait for data signal
 ser.get_ready()
 
-# # Receive data
-# total_bytes = 0
-# rcvd_acc = bytearray()
-# while total_bytes < img_dims[0]*img_dims[1]*img_dims[2]:
-#     num_bytes = ser.ser.in_waiting
-#     total_bytes += num_bytes
-#     rcvd = ser.ser.read(num_bytes)
-#     rcvd_acc.extend(rcvd)
-# img_list = np.array(list(rcvd_acc))
-# img = np.reshape(data, (200, 50, 3))
+# Receive data
+# img_dims = (50, 200, 3)
+# img_bytes = np.array(img_dims).prod()
+# rcvd = ser.read_data(max_bytes=img_bytes)
+# img = np.reshape(data, img_dims)
 
 # Load image
 image_path = "/home/xilinx/python/Pyserial-wrapper/test-small.jpg"
 src = cv2.imread(image_path)
 img = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
-grey = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+grey = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 mask = cv2.inRange(grey, 90, 255)
 data = cv2.bitwise_and(img, img, mask=mask)
 
 # Send ready command
 ser.send_ready()
+ser.get_ready()
 
 time.sleep(0.5)
 
@@ -49,7 +45,7 @@ send = bytearray(data)
 ser.ser.write(send)
 
 # Wait before ending so command line data doesn't get sent
-time.sleep(2)
+time.sleep(5)
 
 # Close serial port  
 ser.close()
