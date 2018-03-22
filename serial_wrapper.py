@@ -8,6 +8,8 @@ __date__ = "23/02/2018"
 __copyright__ = "Copyright 2018 Craft Prospect Ltd"
 
 import serial, time
+from tqdm import tqdm
+import numpy as np
 
 class Serial(object):
     """Class for wrapper around serial class"""
@@ -18,6 +20,16 @@ class Serial(object):
         """Instantiate object"""
 
         self.ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
+
+    def write_raw(self, send):
+        """Raw write function"""
+
+        self.ser.write(send)
+
+    def read_raw(self, num_bytes=1):
+        """Raw read function"""
+
+        return self.ser.read(num_bytes)
 
     def write(self, send):
         """Custom write function"""
@@ -59,6 +71,11 @@ class Serial(object):
         """Check serial port is open"""
 
         return self.ser.is_open
+
+    def in_waiting(self):
+        """Check bytes in waiting"""
+
+        return self.ser.in_waiting
 
     def flush(self):
         """Flush serial port"""
@@ -115,3 +132,50 @@ class Serial(object):
                 handshake = True
 
         return ZERO_TIME
+
+    def send_ready(self):
+        """Send ready signal for following data"""
+
+        self.writeline("ready")
+
+    def get_ready(self, pause=0.5, wait_time=5, verbal=False):
+        """Listen for ready signal for following data"""
+
+        t0 = time.time()
+        loop = True
+        while loop and time.time() - t0 < wait_time:
+            time.sleep(0.5)
+            if verbal: print("Waiting for ready signal")
+            rcvd = self.readline(timeout=0.02)
+            if rcvd != None and "ready" in rcvd:
+                loop = False
+
+        if verbal:
+            print("Data ready to receive")
+
+    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), progress_bar=False):
+        """Read data in form of byte array"""
+
+        if max_bytes == float("inf") and max_time == float("inf") and max_blanks == float("inf"):
+            max_time = 10
+
+        if progress_bar:
+            progress = 0
+
+        rcvd_acc = bytearray()
+        total_bytes = 0
+        running_blanks = 0
+        t0 = time.time()
+        while total_bytes < max_bytes and time.time() - t0 < max_time and running_blanks < max_blanks:
+            num_bytes = self.in_waiting()
+            rcvd = self.ser.read(num_bytes)
+            rcvd_acc.extend(rcvd)
+            total_bytes += num_bytes
+            if num_bytes == 0:
+                running_blanks += 1
+            else:
+                running_blanks = 0
+
+        rcvd_acc = list(rcvd_acc)
+
+        return rcvd_acc
