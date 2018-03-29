@@ -138,22 +138,22 @@ class Serial(object):
 
         self.writeline("ready")
 
-    def get_ready(self, pause=0.5, wait_time=5, verbal=False):
+    def get_ready(self, pause=0.5, wait_time=5, verbose=False):
         """Listen for ready signal for following data"""
 
         t0 = time.time()
         loop = True
         while loop and time.time() - t0 < wait_time:
             time.sleep(0.5)
-            if verbal: print("Waiting for ready signal")
+            if verbose: print("Waiting for ready signal")
             rcvd = self.readline(timeout=0.02)
             if rcvd != None and "ready" in rcvd:
                 loop = False
 
-        if verbal and time.time() - t0 < wait_time:
+        if verbose and time.time() - t0 < wait_time:
             print("Data ready to receive")
 
-    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbal=False):
+    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
         """Read data in form of byte array"""
 
         if max_bytes == float("inf") and max_time == float("inf") and max_blanks == float("inf"):
@@ -175,7 +175,7 @@ class Serial(object):
                 running_blanks = 0
             if running_blanks > 100:
                 t0 = time.time()
-            if verbal and num_bytes > 0:
+            if verbose and num_bytes > 0:
                 print("Time: {:.2f}s, bytes: {}".format(t, num_bytes))
                 # print(rcvd[:20])
             time.sleep(0.01)

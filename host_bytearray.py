@@ -33,33 +33,35 @@ def client_comms():
 
     time.sleep(1)
 
-    # Wait for data signal
-    ser.get_ready(verbal=True)
+    print(ser.readline(10))
 
-    ser.send_ready()
+    # # Wait for data signal
+    # ser.get_ready(verbose=True)
 
-    # Receive data
-    rcvd = ser.read_data(max_bytes=img_bytes, verbal=True)
+    # ser.send_ready()
 
-    data = np.array(rcvd)
-    print("Number of bytes in data package: {}".format(len(data)))
+    # # Receive data
+    # rcvd = ser.read_data(max_bytes=img_bytes, verbose=True)
 
-    data = np.reshape(data, img_dims)
-    # print(data)
-    # print(type(data))
-    if (data == img).all():
-        print("Images are identical")
+    # data = np.array(rcvd)
+    # print("Number of bytes in data package: {}".format(len(data)))
 
-    fig = plt.figure()
-    axs = fig.subplots(2, 1)
-    axs[0].imshow(img)
-    axs[1].imshow(data)
-    plt.show()
+    # data = np.reshape(data, img_dims)
+    # # print(data)
+    # # print(type(data))
+    # if (data == img).all():
+    #     print("Images are identical")
+
+    # fig = plt.figure()
+    # axs = fig.subplots(2, 1)
+    # axs[0].imshow(img)
+    # axs[1].imshow(data)
+    # plt.show()
 
 # Run client script
-cmd = "python3.6 ~/python/Pyserial-wrapper/client_bytearray.py"
-print("Sending command: {}".format(cmd))
-ser.write_terminal_cmd(cmd)
+# cmd = "python3.6 ~/python/Pyserial-wrapper/client_bytearray.py"
+# print("Sending command: {}".format(cmd))
+# ser.write_terminal_cmd(cmd)
 
 time.sleep(0.5)
 
