@@ -63,8 +63,10 @@ if ready:
     # Get data length
     rcvd = ser.readline(2)
     if "Data length" in rcvd:
-        data_length = int(rcvd.split(":")[1])
-        write2file("Incoming data length: {}".format(data_length))
+        dims = list(map(int, rcvd.split(":")[1:]))
+        data_length = dims[0]*dims[1]*dims[2]
+        write2file("Incoming image size: ({}, {}, {})".format(dims[0], dims[1], dims[2]))
+        
 
     time.sleep(0.2)
 
@@ -75,33 +77,35 @@ if ready:
     data = bytearray()
     complete = False
 
+    # Allocate enough time for all bytes
+    max_time = 0.00015*data_length
+
     # Loop
-    while t < 10 and complete == False:
+    first = True
+    while t < max_time and complete == False:
         if total >= data_length:
             complete = True
+            write2file("Image transfer complete")
         num_bytes = ser.in_waiting()
+        if first and num_bytes > 0:
+            first = False
+            write2file("Data incoming")
         total += num_bytes
         rcvd = ser.read_raw(num_bytes)
         data.extend(rcvd)
         savedata = "Bytes rec: {} - Total bytes: {}".format(num_bytes, total)
-        if num_bytes > 0:
-            write2file(savedata)
-        time.sleep(0.01)
+        # if num_bytes > 0:
+        #     write2file(savedata)
+        # time.sleep(0.01)
         t = time.time() - t0
 
     write2file("")
 
     data = np.array(list(data))
 
-    write2file("check1")
-
-    img = np.reshape(data, (50, 200, 3))
-
-    write2file("check2")
+    img = np.reshape(data, tuple(dims))
 
     cv2.imwrite(cur_dir + "/output.jpg", img)
-
-    write2file("check3")
 
 else:
     write2file("Ready signal not received")
