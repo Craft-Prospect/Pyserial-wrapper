@@ -54,14 +54,13 @@ if send_data:
 
     print(write_time("Sending data"))
     # Bytes to send
-    img = cv2.imread("test-small.jpg")
+    img = cv2.imread("test.jpg")
     print("Image size: {}".format(img.shape))
     data = np.reshape(img, -1)
     # data = range(0, 255)
     send = bytearray(data)
     print("Length of bytearray: {}".format(len(data)))
-
-    ser.writeline("Data length: {}".format(len(data)))
+    ser.writeline("Data length:{}:{}:{}".format(img.shape[0], img.shape[1], img.shape[2]))
 
     ser.write_raw(send)
 
