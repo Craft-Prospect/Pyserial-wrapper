@@ -8,77 +8,66 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 from serial_wrapper import Serial
 
+# Pre-append time to log entry
+def write_time(text):
+    now = time.localtime(time.time())
+    text = "{:02d}:{:02d}:{:02d} - {:s}".format(now[3], now[4], now[5], text)
+
+    return text
+
+# Header text
+now = time.localtime(time.time())
+print("File: host_bytearray.py")
+print(time.asctime(now))
+print("")
+
 # Create serial object
+print(write_time("Connecting to serial port"))
 ser = Serial("/dev/ttyUSB1")
 ser.flush()
 
-def client_comms():
+# time.sleep(2)
 
-    # Load image
-    image_path = "test-small.jpg"
-    img = cv2.imread(image_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img_dims = img.shape
-    img_bytes = np.array(img_dims).prod()
-
-    # Send ready command
-    ser.send_ready()
-
-    time.sleep(0.5)
-
-    # Send data
-    data = list(np.reshape(img, -1))
-    send = bytearray(data)
-    ser.ser.write(send)
-
-    time.sleep(1)
-
-    print(ser.readline(10))
-
-    # # Wait for data signal
-    # ser.get_ready(verbose=True)
-
-    # ser.send_ready()
-
-    # # Receive data
-    # rcvd = ser.read_data(max_bytes=img_bytes, verbose=True)
-
-    # data = np.array(rcvd)
-    # print("Number of bytes in data package: {}".format(len(data)))
-
-    # data = np.reshape(data, img_dims)
-    # # print(data)
-    # # print(type(data))
-    # if (data == img).all():
-    #     print("Images are identical")
-
-    # fig = plt.figure()
-    # axs = fig.subplots(2, 1)
-    # axs[0].imshow(img)
-    # axs[1].imshow(data)
-    # plt.show()
-
-# Run client script
-# cmd = "python3.6 ~/python/Pyserial-wrapper/client_bytearray.py"
-# print("Sending command: {}".format(cmd))
-# ser.write_terminal_cmd(cmd)
-
-time.sleep(0.5)
+print(write_time("Starting client"))
+ser.write_terminal_cmd("python3.6 ~/python/Pyserial-wrapper/client_bytearray.py")
 
 # Check script is running
 check = ser.readline(5)
 
 # Send handshake
+send_data = False
 if check != None and "running" in check:
-    print("Running client script detected")
+    print(write_time("Running client script detected"))
     handshake, zero_time = ser.send_handshake()
-
     if handshake:
-        client_comms()
+        send_data = True
 
 else:
-    print("Running client script not detected")
+    print(write_time("Running client script not detected"))
+
+time.sleep(1)
+
+# Send data if handshake received
+if send_data:
+    print(write_time("Sending ready signal"))
+    ser.send_ready()
+
+    print(write_time("Sending data"))
+    # Bytes to send
+    img = cv2.imread("test-small.jpg")
+    print("Image size: {}".format(img.shape))
+    data = np.reshape(img, -1)
+    # data = range(0, 255)
+    send = bytearray(data)
+    print("Length of bytearray: {}".format(len(data)))
+
+    ser.writeline("Data length: {}".format(len(data)))
+
+    ser.write_raw(send)
+
+    print(write_time("Finished sending data"))
 
 # Close serial port
-print("Closing port")
 ser.close()
+
+print(write_time("Host script finished"))

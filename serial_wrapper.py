@@ -141,17 +141,20 @@ class Serial(object):
     def get_ready(self, pause=0.5, wait_time=5, verbose=False):
         """Listen for ready signal for following data"""
 
+        ready = False
+
         t0 = time.time()
-        loop = True
-        while loop and time.time() - t0 < wait_time:
-            time.sleep(0.5)
+        while ready == False and time.time() - t0 < wait_time:
+            time.sleep(pause)
             if verbose: print("Waiting for ready signal")
             rcvd = self.readline(timeout=0.02)
             if rcvd != None and "ready" in rcvd:
-                loop = False
+                ready = True
 
         if verbose and time.time() - t0 < wait_time:
             print("Data ready to receive")
+
+        return ready
 
     def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
         """Read data in form of byte array"""
