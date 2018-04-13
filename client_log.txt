@@ -1,37 +1,13 @@
 File: client_bytearray.py
-Wed Apr  4 16:41:24 2018
+Wed Apr  4 16:58:29 2018
 
-16:41:24 - Connected to serial port
-16:41:24 - Script running
-16:41:25 - Ready signal received
+16:58:29 - Connected to serial port
+16:58:29 - Script running
+16:58:30 - Ready signal received
 
-16:41:25 - Data length:200:800:3
-16:41:25 - Incoming image size: 200:800:3
-16:42:07 - Image transfer complete
+16:58:30 - Incoming image size: (200, 800, 3)
+16:58:30 - Data incoming
+16:59:11 - Image transfer complete
 
-File: client_bytearray.py
-Wed Apr  4 16:44:46 2018
-
-16:44:46 - Connected to serial port
-16:44:46 - Script running
-16:44:47 - Ready signal received
-
-16:44:47 - Incoming image size: 200:800:3
-16:44:47 - Data incoming
-16:45:29 - Image transfer complete
-
-16:45:29 - Client script finished
-
-File: client_bytearray.py
-Wed Apr  4 16:46:35 2018
-
-16:46:35 - Connected to serial port
-16:46:35 - Script running
-16:46:36 - Ready signal received
-
-16:46:36 - Incoming image size: 200:800:3
-16:46:37 - Data incoming
-16:47:18 - Image transfer complete
-
-16:47:19 - Client script finished
+16:59:12 - Client script finished
 
