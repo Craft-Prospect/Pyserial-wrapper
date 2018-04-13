@@ -7,7 +7,7 @@ __email__ = "murray.ireland@craftprospect.com"
 __date__ = "23/02/2018"
 __copyright__ = "Copyright 2018 Craft Prospect Ltd"
 
-import serial, time
+import serial, time, os
 # from tqdm import tqdm
 import numpy as np
 
@@ -19,7 +19,12 @@ class Serial(object):
     def __init__(self, port, baudrate=115200, timeout=0):
         """Instantiate object"""
 
+        # Create serial object
         self.ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
+
+        # Create log file for debugging
+        cur_dir = os.path.dirname(os.path.realpath(__file__))
+        self.log_file = cur_dir + "/logs/serial_log.txt"
 
     def write_raw(self, send):
         """Raw write function"""
@@ -58,9 +63,10 @@ class Serial(object):
 
         rcvd = b""
         t0 = time.time()
-        while time.time() - t0 < timeout or timeout == None:
+        while timeout == None or time.time() - t0 < timeout:
             chr = self.ser.read()
             if chr == b"\r":
+                self.write2file(rcvd.decode("ascii"))
                 return rcvd.decode("ascii")
             rcvd += chr
 
@@ -133,12 +139,12 @@ class Serial(object):
 
         return handshake
 
-    def send_ready(self):
+    def send_ready(self, signal="ready"):
         """Send ready signal for following data"""
 
-        self.writeline("ready")
+        self.writeline(signal)
 
-    def get_ready(self, pause=0.5, wait_time=5, verbose=False):
+    def get_ready(self, signal="ready", pause=0.01, wait_time=5, verbose=False):
         """Listen for ready signal for following data"""
 
         ready = False
@@ -148,7 +154,7 @@ class Serial(object):
             time.sleep(pause)
             if verbose: print("Waiting for ready signal")
             rcvd = self.readline(timeout=0.02)
-            if rcvd != None and "ready" in rcvd:
+            if rcvd != None and signal in rcvd:
                 ready = True
 
         if verbose and time.time() - t0 < wait_time:
@@ -187,3 +193,28 @@ class Serial(object):
         rcvd_acc = list(rcvd_acc)
 
         return rcvd_acc
+
+    def write_time(self, text):
+        """Pre-append time to log entry"""
+
+        now = time.localtime(time.time())
+        text = "{:02d}:{:02d}:{:02d} - {:s}".format(now[3], now[4], now[5], text)
+
+        return text
+
+    def write2file(self, text, show_time=True):
+        """Script for saving data to log"""
+
+        if text == "":
+            show_time = False     
+        with open(self.log_file, "a") as myfile:
+            if type(text) is str:
+                if show_time:
+                    text = self.write_time(text)
+                myfile.write(text + "\n")
+            elif type(text) is list:
+                for line in text:
+                    if show_time:
+                        line = self.write_time(line)
+                    myfile.write(line + "\n")
+
