@@ -131,7 +131,7 @@ class Serial(object):
                 ZERO_TIME = time.time()
                 handshake = True
 
-        return ZERO_TIME
+        return handshake
 
     def send_ready(self):
         """Send ready signal for following data"""
