@@ -16,16 +16,18 @@ class Serial(object):
 
     HANDSHAKE = "Pynq panther"
 
-    def __init__(self, port, baudrate=115200, timeout=0):
+    def __init__(self, port, baudrate=115200, timeout=0, log_data=False):
         """Instantiate object"""
 
         # Create serial object
         self.ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
 
         # Create log file for debugging
-        cur_dir = os.path.dirname(os.path.realpath(__file__))
-        self.log_file = cur_dir + "/logs/serial_log.txt"
-
+        self.log_data = log_data
+        if log_data:
+            cur_dir = os.path.dirname(os.path.realpath(__file__))
+            self.log_file = cur_dir + "/logs/serial_log.txt"
+            
     def write_raw(self, send):
         """Raw write function"""
 
@@ -66,7 +68,7 @@ class Serial(object):
         while timeout == None or time.time() - t0 < timeout:
             chr = self.ser.read()
             if chr == b"\r":
-                self.write2file(rcvd.decode("ascii"))
+                if self.log_data: self.write2file(rcvd.decode("ascii"))
                 return rcvd.decode("ascii")
             rcvd += chr
 
