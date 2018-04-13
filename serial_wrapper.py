@@ -156,12 +156,13 @@ class Serial(object):
 
         return ready
 
-    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
+    def read_bytearray(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
         """Read data in form of byte array"""
 
         if max_bytes == float("inf") and max_time == float("inf") and max_blanks == float("inf"):
             max_time = 10
 
+        count_blanks = False
         rcvd_acc = bytearray()
         total_bytes = 0
         running_blanks = 0
@@ -169,15 +170,16 @@ class Serial(object):
         t = 0
         while total_bytes < max_bytes and t < max_time and running_blanks < max_blanks:
             num_bytes = self.in_waiting()
+            if num_bytes > 0 and count_blanks == False:
+                t0 = time.time()
+                count_blanks = True
             rcvd = self.ser.read(num_bytes)
             rcvd_acc.extend(rcvd)
             total_bytes += num_bytes
-            if num_bytes == 0:
+            if num_bytes == 0 and count_blanks:
                 running_blanks += 1
             else:
                 running_blanks = 0
-            if running_blanks > 100:
-                t0 = time.time()
             if verbose and num_bytes > 0:
                 print("Time: {:.2f}s, bytes: {}".format(t, num_bytes))
                 # print(rcvd[:20])
@@ -187,3 +189,41 @@ class Serial(object):
         rcvd_acc = list(rcvd_acc)
 
         return rcvd_acc
+        
+    def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
+        """Read data in form of byte array"""
+
+        if max_bytes == float("inf") and max_time == float("inf") and max_blanks == float("inf"):
+            max_time = 10
+
+        count_blanks = False
+        rcvd_acc = b""
+        total_bytes = 0
+        running_blanks = 0
+        t0 = time.time()
+        t = 0
+        while total_bytes < max_bytes and t < max_time and running_blanks < max_blanks:
+            num_bytes = self.in_waiting()
+            if num_bytes > 0 and count_blanks == False:
+                t0 = time.time()
+                count_blanks = True
+            rcvd = self.ser.read(num_bytes)
+            rcvd_acc += rcvd
+            total_bytes += num_bytes
+            if num_bytes == 0 and count_blanks:
+                running_blanks += 1
+            else:
+                running_blanks = 0
+            if verbose and num_bytes > 0:
+                print("Time: {:.2f}s, bytes: {}".format(t, num_bytes))
+                # print(rcvd[:20])
+            time.sleep(0.01)
+            t = time.time() - t0
+
+        data_bytes = rcvd_acc.split(b"\r")
+
+        data = []
+        for item in data_bytes:
+            data.append(item.decode("ascii"))
+
+        return data
