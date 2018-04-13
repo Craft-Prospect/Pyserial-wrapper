@@ -195,7 +195,6 @@ class Serial(object):
         rcvd_acc = list(rcvd_acc)
 
         return rcvd_acc
-<<<<<<< HEAD
         
     def read_data(self, max_bytes=float("inf"), max_time=float("inf"), max_blanks=float("inf"), verbose=False):
         """Read data in form of byte array"""
@@ -234,7 +233,6 @@ class Serial(object):
             data.append(item.decode("ascii"))
 
         return data
-=======
 
     def write_time(self, text):
         """Pre-append time to log entry"""
@@ -260,4 +258,3 @@ class Serial(object):
                         line = self.write_time(line)
                     myfile.write(line + "\n")
 
->>>>>>> 66d507580bf3391d32bc1ce83eaea2d29a906e31
