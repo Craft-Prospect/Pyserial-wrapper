@@ -154,9 +154,9 @@ class Serial(object):
 
         t0 = time.time()
         while ready == False and time.time() - t0 < wait_time:
-            time.sleep(pause)
+            # time.sleep(pause)
             if verbose: print("Waiting for ready signal")
-            rcvd = self.readline(timeout=0.02)
+            rcvd = self.readline(timeout=0.1)
             if rcvd != None and signal in rcvd:
                 ready = True
 
