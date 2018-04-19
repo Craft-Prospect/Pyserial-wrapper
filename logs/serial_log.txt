@@ -1,38 +1,187 @@
-10:09:14 - Pynq panther
-10:09:14 - Pynq panther
-10:09:14 - ready
-10:09:14 - REF
-10:09:15 - ready
-10:09:15 - REF
-10:09:16 - ready
-10:09:16 - REF
-10:09:16 - ready
-10:09:16 - REF
-10:09:17 - ready
-10:09:17 - REF
-10:09:18 - ready
-10:09:18 - REF
-10:09:19 - ready
-10:09:19 - REF
-10:09:20 - ready
-10:09:20 - REF
-10:09:21 - ready
-10:09:21 - REF
-10:09:22 - ready
-10:09:22 - REF
-10:09:23 - ready
-10:09:23 - REF
-10:09:24 - ready
-10:09:24 - REF
-10:09:24 - ready
-10:09:24 - REF
-10:09:25 - ready
-10:09:25 - REF
-10:09:26 - ready
-10:09:26 - REF
-10:09:27 - ready
-10:09:27 - REF
-10:09:28 - ready
-10:09:28 - REF
-10:09:28 - y
-10:09:28 - REF
+11:02:23 - Setting network weights and thresholds in accelerator...
+Script running
+11:02:23 - ***received***
+11:02:24 - ***ready***********
+11:02:25 - Inference took 22836 microseconds, 356.812 usec per image
+Classification rate: 2802.59 images per second
+*********ready**********ready***********
+11:02:26 - Inference took 22847 microseconds, 356.984 usec per image
+Classification rate: 2801.24 images per second
+*********ready**********ready***********
+11:02:27 - Inference took 22803 microseconds, 356.297 usec per image
+Classification rate: 2806.65 images per second
+*********ready**********ready***********
+11:02:28 - fication rate: 2800.75 images per second
+*********ready**********ready***********
+11:02:29 - 03.57 images per second
+*********ready**********ready***********
+11:02:31 - *****ready***********
+11:02:32 - *********ready**********ready***********
+11:02:33 - es per second
+*********ready**********ready***********
+11:02:34 - Inference took 22798 microseconds, 356.219 usec per image
+Classification rate: 2807.26 images per second
+*********ready**********ready***********
+11:02:35 - Inference took 22807 microseconds, 356.359 usec per image
+Classification rate: 2806.16 images per second
+*********ready**********ready***********
+11:02:37 - Inference took 22819 microseconds, 356.547 usec per image
+Classification rate: 2804.68 images per second
+*********ready**********ready***********
+11:02:38 - 12 usec per image
+Classification rate: 2806.53 images per second
+*********ready**********ready***********
+11:02:39 - Inference took 22822 microseconds, 356.594 usec per image
+Classification rate: 2804.31 images per second
+*********ready**********ready***********
+11:02:40 - ds, 356.703 usec per image
+Classification rate: 2803.45 images per second
+*********ready**********ready***********
+11:02:41 - *********ready**********ready***********
+11:02:42 - Inference took 22802 microseconds, 356.281 usec per image
+Classification rate: 2806.77 images per second
+*********ready**********ready***********
+11:02:43 -  rate: 2803.82 images per second
+*********ready**********ready***********
+11:02:44 - 
+*********ready**********ready***********
+11:02:46 - Inference took 22839 microseconds, 356.859 usec per image
+Classification rate: 2802.22 images per second
+*********ready**********ready***********
+11:02:47 - Inference took 22820 microseconds, 356.562 usec per image
+Classification rate: 2804.56 images per second
+*********ready**********ready***********
+11:02:48 - Inference took 22792 microseconds, 356.125 usec per image
+Classification rate: 2808 images per second
+*********ready**********ready***********
+11:02:49 - Inference took 22838 microseconds, 356.844 usec per image
+Classification rate: 2802.35 images per second
+*********ready**********ready***********
+11:02:50 - Inference took 22842 microseconds, 356.906 usec per image
+Classification rate: 2801.86 images per second
+*********ready**********ready***********
+11:02:51 - *********ready**********ready***********
+11:02:52 - *********ready**********ready***********
+11:02:53 - 2804.43 images per second
+*********ready**********ready***********
+11:02:55 - Inference took 22814 microseconds, 356.469 usec per image
+Classification rate: 2805.29 images per second
+*********ready**********ready***********
+11:02:56 - image
+Classification rate: 2805.29 images per second
+*********ready**********ready***********
+11:02:57 - Inference took 22826 microseconds, 356.656 usec per image
+Classification rate: 2803.82 images per second
+*********ready**********ready***********
+11:02:58 - Inference took 22823 microseconds, 356.609 usec per image
+Classification rate: 2804.19 images per second
+*********ready**********ready***********
+11:02:59 - Inference took 22804 microseconds, 356.312 usec per image
+Classification rate: 2806.53 images per second
+*********ready**********ready***********
+11:03:00 - Inference took 22825 microseconds, 356.641 usec per image
+Classification rate: 2803.94 images per second
+*********ready**********ready***********
+11:03:01 - ready**********ready***********
+11:03:02 - Inference took 22811 microseconds, 356.422 usec per image
+Classification rate: 2805.66 images per second
+*********ready**********ready***********
+11:03:03 - Inference took 22854 microseconds, 357.094 usec per image
+Classification rate: 2800.39 images per second
+*********ready**********ready***********
+11:03:04 - Inference took 22800 microseconds, 356.25 usec per image
+Classification rate: 2807.02 images per second
+*********ready**********ready***********
+11:03:06 - Inference took 22797 microseconds, 356.203 usec per image
+Classification rate: 2807.39 images per second
+*********ready**********ready***********
+11:03:07 - Inference took 22829 microseconds, 356.703 usec per image
+Classification rate: 2803.45 images per second
+*********ready**********ready***********
+11:03:08 - Inference took 22831 microseconds, 356.734 usec per image
+Classification rate: 2803.21 images per second
+*********ready**********ready***********
+11:03:09 -  per second
+*********ready**********ready***********
+11:03:10 - Inference took 22812 microseconds, 356.438 usec per image
+Classification rate: 2805.54 images per second
+*********ready**********ready***********
+11:03:11 - Inference took 22815 microseconds, 356.484 usec per image
+Classification rate: 2805.17 images per second
+*********ready**********ready***********
+11:03:12 - Inference took 22839 microseconds, 356.859 usec per image
+Classification rate: 2802.22 images per second
+*********ready**********ready***********
+11:03:13 - Inference took 22816 microseconds, 356.5 usec per image
+Classification rate: 2805.05 images per second
+*********ready**********ready***********
+11:03:14 - ******ready***********
+11:03:15 - ******
+11:03:15 - Coord type:Clear
+11:03:15 - Coord type:Cloudy
+11:03:15 - 675.0,25.0
+11:03:15 - 725.0,25.0
+11:03:15 - 775.0,25.0
+11:03:15 - 375.0,75.0
+11:03:15 - 675.0,75.0
+11:03:15 - 725.0,75.0
+11:03:15 - 775.0,75.0
+11:03:15 - 575.0,125.0
+11:03:15 - 625.0,125.0
+11:03:15 - 675.0,125.0
+11:03:15 - 725.0,125.0
+11:03:15 - 775.0,125.0
+11:03:15 - 475.0,175.0
+11:03:15 - 525.0,175.0
+11:03:15 - 575.0,175.0
+11:03:15 - 625.0,175.0
+11:03:15 - 675.0,175.0
+11:03:15 - 725.0,175.0
+11:03:15 - 775.0,175.0
+11:03:15 - Coord type:Partly_cloudy
+11:03:15 - 25.0,25.0
+11:03:15 - 75.0,25.0
+11:03:15 - 125.0,25.0
+11:03:15 - 175.0,25.0
+11:03:15 - 225.0,25.0
+11:03:15 - 275.0,25.0
+11:03:15 - 325.0,25.0
+11:03:15 - 375.0,25.0
+11:03:15 - 425.0,25.0
+11:03:15 - 475.0,25.0
+11:03:15 - 525.0,25.0
+11:03:15 - 575.0,25.0
+11:03:15 - 625.0,25.0
+11:03:15 - 25.0,75.0
+11:03:15 - 75.0,75.0
+11:03:15 - 125.0,75.0
+11:03:15 - 175.0,75.0
+11:03:16 - 225.0,75.0
+11:03:16 - 275.0,75.0
+11:03:16 - 325.0,75.0
+11:03:16 - 425.0,75.0
+11:03:16 - 475.0,75.0
+11:03:16 - 525.0,75.0
+11:03:16 - 575.0,75.0
+11:03:16 - 625.0,75.0
+11:03:16 - 25.0,125.0
+11:03:16 - 75.0,125.0
+11:03:16 - 125.0,125.0
+11:03:16 - 175.0,125.0
+11:03:16 - 225.0,125.0
+11:03:16 - 275.0,125.0
+11:03:16 - 325.0,125.0
+11:03:16 - 375.0,125.0
+11:03:16 - 425.0,125.0
+11:03:16 - 475.0,125.0
+11:03:16 - 525.0,125.0
+11:03:16 - 25.0,175.0
+11:03:16 - 75.0,175.0
+11:03:16 - 125.0,175.0
+11:03:16 - 175.0,175.0
+11:03:16 - 225.0,175.0
+11:03:16 - 275.0,175.0
+11:03:16 - 325.0,175.0
+11:03:16 - 375.0,175.0
+11:03:16 - 425.0,175.0
+11:03:16 - Coord type:Haze

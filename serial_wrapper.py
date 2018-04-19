@@ -141,7 +141,7 @@ class Serial(object):
 
         return handshake
 
-    def send_ready(self, signal="*********ready**********ready***********"):
+    def send_ready(self, signal="readyreadyreadyready"):
         """Send ready signal for following data"""
 
         self.writeline(signal)
