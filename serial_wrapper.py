@@ -10,6 +10,7 @@ __copyright__ = "Copyright 2018 Craft Prospect Ltd"
 import serial, time, os
 # from tqdm import tqdm
 import numpy as np
+from datetime import datetime
 
 class Serial(object):
     """Class for wrapper around serial class"""
@@ -239,8 +240,8 @@ class Serial(object):
     def write_time(self, text):
         """Pre-append time to log entry"""
 
-        now = time.localtime(time.time())
-        text = "{:02d}:{:02d}:{:02d} - {:s}".format(now[3], now[4], now[5], text)
+        now = datetime.now()
+        text = "{:02d}:{:02d}:{:02d}.{:03d} - {:s}".format(now.hour, now.minute, now.second, int(now.microsecond/1000), text)
 
         return text
 
